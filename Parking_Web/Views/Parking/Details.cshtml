@@ -1,0 +1,33 @@
+﻿@model Parking_Web.ViewModels.Parking.Details.ParkingDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>@Model.Country, @Model.City, @Model.Street</h4>
+    <hr />
+    @foreach (var level in Model.ParkingLevels)
+    {
+        <h3>Floor: @level.Floor</h3>
+        <div class="d-flex flex-wrap">
+            @foreach (var parkingSpace in level.ParkingSpaces)
+            {
+                if (parkingSpace.Vehicle == null)
+                {
+                    <button class="btn btn-success mx-1">@parkingSpace.Number</button>
+                }
+                else
+                {
+                    <button class="btn btn-danger mx-1">@parkingSpace.Number</button>
+                }
+            }
+        </div>
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit |</a>
+    <a asp-action="Index">Back to List</a>
+</div>

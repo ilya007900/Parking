@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Parking]
+(
+	[Id] INT IDENTITY(1, 1) NOT NULL,
+	[Country] NVARCHAR(200) NOT NULL,
+	[City] NVARCHAR(200) NOT NULL,
+	[Street] NVARCHAR(200) NOT NULL,
+
+	CONSTRAINT [PK_Parking_Id] PRIMARY KEY([Id])
+)

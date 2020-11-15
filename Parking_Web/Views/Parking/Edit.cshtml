@@ -1,0 +1,87 @@
+﻿@model Parking_Web.ViewModels.Parking.Edit.ParkingEditViewModel
+
+@{
+    ViewData["Title"] = $"Edit {Model.Street} parking";
+}
+
+<h1>Edit Parking</h1>
+
+<hr />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" class="form-control" />
+    <div class="form-row mb-2">
+        <div class="col-md-4">
+            <label asp-for="Country"></label>
+            <input asp-for="Country" class="form-control" />
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="City"></label>
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Street"></label>
+            <input asp-for="Street" class="form-control" />
+            <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+    </div>
+    <input type="submit" value="Save" class="btn btn-primary"/>
+</form>
+<hr/>
+<a class="ml-4" asp-action="AddLevel" asp-route-parkingId="@Model.Id">Add Level</a>
+@foreach (var level in Model.Levels)
+{
+<div class="border border-dark p-2 m-2">
+    <div class="d-flex my-1">
+        <div>Level @level.Floor</div>
+        <div class="ml-4">
+            <a asp-controller="ParkingLevel"
+               asp-action="AddParkingSpace"
+               asp-route-parkingLevelId="@level.Id">Add parking space | </a>
+            <a asp-controller="ParkingLevel"
+               asp-action="Edit"
+               asp-route-parkingLevelId="@level.Id">Edit | </a>
+            <a asp-controller="Parking"
+               asp-action="DeleteLevel"
+               asp-route-parkingId="@Model.Id"
+               asp-route-levelId="@level.Id">Delete</a>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap">
+        @foreach (var parkingSpace in level.ParkingSpaces)
+        {
+            var borderColor = parkingSpace.Vehicle == null ? "border-success" : "border-danger";
+        <div class="text-center border @borderColor p-2 m-1">
+            <h5>@parkingSpace.Number</h5>
+            @if (parkingSpace.Vehicle == null)
+            {
+                <a class="d-block" 
+                   asp-controller="ParkingLevel" asp-action="ParkVehicle"
+                   asp-route-parkingLevelId="@level.Id"
+                   asp-route-parkingSpaceNumber="@parkingSpace.Number">Park vehicle</a>
+            }
+            else
+            {
+                <a asp-controller="ParkingLevel" asp-action="FreeParkingSpace"
+                   asp-route-parkingLevelId="@level.Id"
+                   asp-route-parkingSpaceNumber="@parkingSpace.Number">Free parking space</a>
+            }
+
+            <a class="d-block" asp-controller="ParkingLevel" asp-action="DeleteParkingSpace"
+               asp-route-parkingLevelId="@level.Id"
+               asp-route-parkingSpaceId="@parkingSpace.Id">Delete</a>
+        </div>
+        }
+    </div>
+</div>
+}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

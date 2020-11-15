@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" asp-controller="Parking" asp-action="Index">Parking Manager</a>
+
+        <form method="get" asp-controller="Parking" asp-action="FindParkingSpace" class="form-inline my-2 my-lg-0">
+            <input name="licensePlate" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<div class="container">
+    @RenderBody()
+</div>
+<script src="~/lib/jquery/jquery.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

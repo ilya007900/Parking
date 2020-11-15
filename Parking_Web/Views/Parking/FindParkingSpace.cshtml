@@ -1,0 +1,14 @@
+﻿@model Parking_Domain.ParkingSpaces.ParkingSpace
+@{
+    ViewData["Title"] = "Find Parking Space";
+}
+
+<h1>Find Parking Space</h1>
+<h3>
+    Parking:
+    @Model.ParkingLevel.Parking.Address.Country,
+    @Model.ParkingLevel.Parking.Address.City,
+    @Model.ParkingLevel.Parking.Address.Street
+</h3>
+<h3>Floor: @Model.ParkingLevel.Floor</h3>
+<h3>Parking Space: @Model.Number</h3>
