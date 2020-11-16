@@ -179,7 +179,8 @@ namespace Parking_Web.Controllers
             return RedirectToAction(nameof(Edit), new {id = viewModel.ParkingId});
         }
 
-        [HttpGet]
+        //Primary version
+        [HttpGet] //Of course it is not get
         public IActionResult DeleteLevel(int parkingId, int levelId)
         {
             var parking = _parkingRepository.FindById(parkingId);
@@ -198,6 +199,36 @@ namespace Parking_Web.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Edit), new {id = parkingId});
+        }
+
+        //Looks strange
+        [HttpGet]
+        public IActionResult DeleteLevel2(int levelId)
+        {
+            var parkingLevel = _context.ParkingLevels.Find(levelId);
+            if (parkingLevel == null)
+            {
+                return NotFound();
+            }
+
+            parkingLevel.Parking.RemoveParkingLevel(parkingLevel);
+            return Ok();
+        }
+
+        //CRUD based thinking?
+        [HttpGet]
+        public IActionResult DeleteLevel3(int levelId)
+        {
+            var parkingLevel = _context.ParkingLevels.Find(levelId);
+            if (parkingLevel == null)
+            {
+                return NotFound();
+            }
+
+            _context.ParkingLevels.Remove(parkingLevel);
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         [HttpGet]
