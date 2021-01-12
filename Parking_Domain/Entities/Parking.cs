@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Parking_Domain.Common;
 using Parking_Domain.FunctionalExtensions;
-using Parking_Domain.ParkingLevels;
-using Parking_Domain.ParkingSpaces;
 
-namespace Parking_Domain.ParkingEntities
+namespace Parking_Domain.Entities
 {
     public class Parking : Entity
     {
@@ -38,9 +36,13 @@ namespace Parking_Domain.ParkingEntities
             return Result.Success();
         }
 
-        public void RemoveParkingLevel(ParkingLevel parkingLevel)
+        public void RemoveParkingLevel(int floor)
         {
-            _parkingLevels.Remove(parkingLevel);
+            var parkingLevel = _parkingLevels.FirstOrDefault(x => x.Floor == floor);
+            if (parkingLevel != null)
+            {
+                _parkingLevels.Remove(parkingLevel);
+            }
         }
 
         public void UpdateAddress(Address address)

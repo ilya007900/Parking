@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using Parking_Domain.ParkingSpaces;
+using Parking_Domain.Entities;
 
 namespace Parking_Web.ViewModels.ParkingLevel
 {

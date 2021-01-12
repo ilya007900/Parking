@@ -1,4 +1,4 @@
-﻿@model IList<Parking_Domain.ParkingEntities.Parking>
+﻿@model IReadOnlyList<Application.Queries.ParkingDto>
 @{
     ViewData["Title"] = "Index";
 }
@@ -19,8 +19,8 @@
         {
             <tr>
                 <td>@parking.Id</td>
-                <td>@parking.Address.Country, @parking.Address.City, @parking.Address.Street</td>
-                <td>@parking.ParkingLevels.Count</td>
+                <td>@parking.Country, @parking.City, @parking.Street</td>
+                <td>@parking.LevelsCount</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@parking.Id">Edit | </a>
                     <a asp-action="Details" asp-route-id="@parking.Id">Details</a>

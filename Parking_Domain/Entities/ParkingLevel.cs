@@ -2,10 +2,8 @@
 using System.Linq;
 using Parking_Domain.Common;
 using Parking_Domain.FunctionalExtensions;
-using Parking_Domain.ParkingEntities;
-using Parking_Domain.ParkingSpaces;
 
-namespace Parking_Domain.ParkingLevels
+namespace Parking_Domain.Entities
 {
     public class ParkingLevel : Entity
     {
@@ -15,8 +13,6 @@ namespace Parking_Domain.ParkingLevels
 
         public int Floor { get; private set; }
 
-        public virtual Parking Parking { get; }
-
         public ParkingLevel(int floor)
         {
             Floor = floor;
@@ -24,15 +20,15 @@ namespace Parking_Domain.ParkingLevels
 
         protected ParkingLevel()
         {
-            
+
         }
 
         public Result UpdateFloor(int floor)
         {
-            if (Parking.ParkingLevels.Any(x => x != this && x.Floor == floor))
-            {
-                return Result.Failure($"Level with {floor} floor already exists");
-            }
+            //if (Parking.ParkingLevels.Any(x => x != this && x.Floor == floor))
+            //{
+            //    return Result.Failure($"Level with {floor} floor already exists");
+            //}
 
             Floor = floor;
             return Result.Success();
@@ -49,9 +45,13 @@ namespace Parking_Domain.ParkingLevels
             return Result.Success();
         }
 
-        public void RemoveParkingSpace(ParkingSpace parkingSpace)
+        public void RemoveParkingSpace(int number)
         {
-            _parkingSpaces.Remove(parkingSpace);
+            var parkingSpace = _parkingSpaces.FirstOrDefault(x => x.Number == number);
+            if (parkingSpace != null)
+            {
+                _parkingSpaces.Remove(parkingSpace);
+            }
         }
 
         public Result ParkVehicle(int parkingSpaceNumber, Vehicle vehicle)

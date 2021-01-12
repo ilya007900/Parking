@@ -1,4 +1,4 @@
-﻿@model Parking_Web.ViewModels.Parking.Edit.ParkingEditViewModel
+﻿@model Application.Queries.ParkingInfoDto
 
 @{
     ViewData["Title"] = $"Edit {Model.Street} parking";
@@ -46,17 +46,17 @@
             <a asp-controller="Parking"
                asp-action="DeleteLevel"
                asp-route-parkingId="@Model.Id"
-               asp-route-levelId="@level.Id">Delete</a>
+               asp-route-floor="@level.Floor">Delete</a>
         </div>
     </div>
 
     <div class="d-flex flex-wrap">
-        @foreach (var parkingSpace in level.ParkingSpaces)
+        @foreach (var parkingSpace in level.Spaces)
         {
-            var borderColor = parkingSpace.Vehicle == null ? "border-success" : "border-danger";
+            var borderColor = parkingSpace.IsFree ? "border-success" : "border-danger";
         <div class="text-center border @borderColor p-2 m-1">
             <h5>@parkingSpace.Number</h5>
-            @if (parkingSpace.Vehicle == null)
+            @if (parkingSpace.IsFree)
             {
                 <a class="d-block" 
                    asp-controller="ParkingLevel" asp-action="ParkVehicle"

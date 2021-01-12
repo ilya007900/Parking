@@ -15,7 +15,7 @@
         <div class="d-flex flex-wrap">
             @foreach (var parkingSpace in level.ParkingSpaces)
             {
-                if (parkingSpace.Vehicle == null)
+                if (parkingSpace.IsFree)
                 {
                     <button class="btn btn-success mx-1">@parkingSpace.Number</button>
                 }

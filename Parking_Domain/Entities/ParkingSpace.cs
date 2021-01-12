@@ -1,17 +1,16 @@
 ﻿using System;
 using Parking_Domain.Common;
 using Parking_Domain.FunctionalExtensions;
-using Parking_Domain.ParkingLevels;
 
-namespace Parking_Domain.ParkingSpaces
+namespace Parking_Domain.Entities
 {
     public class ParkingSpace : Entity
     {
         public int Number { get; }
 
-        public virtual Vehicle Vehicle { get; private set; }
+        public bool IsFree => Vehicle == null;
 
-        public virtual ParkingLevel ParkingLevel { get; }
+        public virtual Vehicle Vehicle { get; private set; }
 
         public ParkingSpace(int number)
         {

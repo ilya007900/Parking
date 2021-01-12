@@ -1,6 +1,4 @@
-﻿using Parking_Domain;
-
-namespace Parking_Web.ViewModels.Parking.Details
+﻿namespace Parking_Web.ViewModels.Parking.Details
 {
     public class ParkingSpaceDetailsViewModel
     {
@@ -8,6 +6,6 @@ namespace Parking_Web.ViewModels.Parking.Details
 
         public int Number { get; set; }
 
-        public Vehicle Vehicle { get; set; }
+        public bool IsFree { get; set; }
     }
 }

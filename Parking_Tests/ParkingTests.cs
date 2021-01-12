@@ -1,8 +1,7 @@
 ﻿using NUnit.Framework;
 using Parking_Domain;
-using Parking_Domain.ParkingEntities;
-using Parking_Domain.ParkingLevels;
 using System;
+using Parking_Domain.Entities;
 
 namespace Parking_Tests
 {
