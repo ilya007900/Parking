@@ -8,9 +8,9 @@ namespace Parking_Domain.Entities
 {
     public class Parking : Entity
     {
-        private readonly List<ParkingLevel> _parkingLevels = new List<ParkingLevel>();
+        private readonly List<ParkingLevel> parkingLevels = new List<ParkingLevel>();
 
-        public virtual IReadOnlyList<ParkingLevel> ParkingLevels => _parkingLevels;
+        public virtual IReadOnlyList<ParkingLevel> ParkingLevels => parkingLevels;
 
         public virtual Address Address { get; private set; }
 
@@ -27,21 +27,21 @@ namespace Parking_Domain.Entities
 
         public Result AddParkingLevel(ParkingLevel parkingLevel)
         {
-            if (_parkingLevels.Any(x => x.Floor == parkingLevel.Floor))
+            if (parkingLevels.Any(x => x.Floor == parkingLevel.Floor))
             {
                 return Result.Failure($"Parking level with floor {parkingLevel.Floor} already exists");
             }
 
-            _parkingLevels.Add(parkingLevel);
+            parkingLevels.Add(parkingLevel);
             return Result.Success();
         }
 
         public void RemoveParkingLevel(int floor)
         {
-            var parkingLevel = _parkingLevels.FirstOrDefault(x => x.Floor == floor);
+            var parkingLevel = parkingLevels.FirstOrDefault(x => x.Floor == floor);
             if (parkingLevel != null)
             {
-                _parkingLevels.Remove(parkingLevel);
+                parkingLevels.Remove(parkingLevel);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Parking_Domain.Entities
 
         public ParkingSpace FindParkingSpace(LicensePlate licensePlate)
         {
-            foreach (var parkingLevel in _parkingLevels)
+            foreach (var parkingLevel in parkingLevels)
             {
                 var parkingSpace = parkingLevel.FindParkingSpace(licensePlate);
                 if (parkingSpace != null)
