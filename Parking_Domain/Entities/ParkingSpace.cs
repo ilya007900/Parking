@@ -1,8 +1,8 @@
 ﻿using System;
-using Parking_Domain.Common;
-using Parking_Domain.FunctionalExtensions;
+using Domain.Common;
+using Domain.FunctionalExtensions;
 
-namespace Parking_Domain.Entities
+namespace Domain.Entities
 {
     public class ParkingSpace : Entity
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Parking_Domain.Common;
-using Parking_Domain.FunctionalExtensions;
+using Domain.Common;
+using Domain.FunctionalExtensions;
 
-namespace Parking_Domain.Entities
+namespace Domain.Entities
 {
     public class Parking : Entity
     {

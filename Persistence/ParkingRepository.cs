@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Parking_Domain.Entities;
 
 namespace Persistence
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Parking_Domain.Common
+namespace Domain.Common
 {
     public class Entity
     {

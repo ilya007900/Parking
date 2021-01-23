@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using Parking_Domain;
-using Parking_Domain.Entities;
-using Parking_Domain.FunctionalExtensions;
+using Domain;
+using Domain.Entities;
+using Domain.FunctionalExtensions;
 
 namespace Application.Commands
 {

@@ -1,6 +1,6 @@
-﻿using Parking_Domain.FunctionalExtensions;
+﻿using Domain.FunctionalExtensions;
 
-namespace Parking_Domain
+namespace Domain
 {
     public class Address
     {

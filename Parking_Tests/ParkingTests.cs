@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using Parking_Domain;
-using System;
-using Parking_Domain.Entities;
+﻿using System;
+using Domain;
+using Domain.Entities;
+using NUnit.Framework;
 
-namespace Parking_Tests
+namespace Domain_Tests
 {
     public class ParkingTests
     {

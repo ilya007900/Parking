@@ -1,4 +1,4 @@
-﻿namespace Parking_Domain.Common
+﻿namespace Domain.Common
 {
     public abstract class ValueObject<T> where T : ValueObject<T>
     {

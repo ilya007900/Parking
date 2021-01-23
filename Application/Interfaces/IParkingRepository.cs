@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Parking_Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {

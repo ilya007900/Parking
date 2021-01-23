@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using Parking_Domain.Entities;
+using Domain.Entities;
 
 namespace Persistence
 {

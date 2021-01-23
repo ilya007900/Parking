@@ -1,4 +1,4 @@
-﻿using Parking_Domain;
+﻿using Domain;
 
 namespace Parking_Web.ViewModels.Parking.Edit
 {

@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using Parking_Domain.FunctionalExtensions;
+using Domain.FunctionalExtensions;
 
 namespace Application.Commands
 {
