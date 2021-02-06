@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
 using MediatR;
+using ParkingService.Application.Interfaces;
 
-namespace Application.Commands
+namespace ParkingService.Application.Commands
 {
     public class DeleteParkingSpaceCommand : ICommand
     {
@@ -32,7 +32,7 @@ namespace Application.Commands
         public Task<Unit> Handle(DeleteParkingSpaceCommand request, CancellationToken cancellationToken)
         {
             var parking = unitOfWork.ParkingRepository.Find(request.ParkingId);
-            var level = parking.ParkingLevels.First(x => x.Floor == request.Floor);
+            var level = parking.Floors.First(x => x.Number == request.Floor);
             level.RemoveParkingSpace(request.SpaceNumber);
 
             unitOfWork.Save();

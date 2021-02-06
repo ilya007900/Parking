@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Application.Commands;
-using Application.Queries;
+using ParkingService.Application.Commands;
+using ParkingService.Application.Queries;
 
-namespace Api.Controllers
+namespace ParkingService.Api.Controllers
 {
     [Route("api/parkings")]
     [ApiController]
@@ -25,7 +25,6 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
-
         public async Task<IActionResult> Get(int id)
         {
             var parking = await mediator.Send(new GetParkingQuery(id));
@@ -33,7 +32,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateParkingDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateParkingRequest dto)
         {
             if (!ModelState.IsValid)
             {
@@ -69,14 +68,14 @@ namespace Api.Controllers
         }
 
         [HttpPost("{id}/levels")]
-        public async Task<IActionResult> AddLevel(int id, [FromBody] AddParkingLevelDto dto)
+        public async Task<IActionResult> AddLevel(int id, [FromBody] AddFloorRequest dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var command = new AddParkingLevelCommand(id, dto.Floor);
+            var command = new AddFloorCommand(id, dto.Floor);
             var result = await mediator.Send(command);
             if (!result.IsSuccess)
             {
@@ -89,7 +88,7 @@ namespace Api.Controllers
         [HttpDelete("{id}/levels/{floor}")]
         public async Task<IActionResult> DeleteLevel(int id, int floor)
         {
-            var command = new DeleteParkingLevelCommand(id, floor);
+            var command = new DeleteFloorCommand(id, floor);
             var result = await mediator.Send(command);
             if (!result.IsSuccess)
             {
@@ -102,7 +101,7 @@ namespace Api.Controllers
         [HttpPost("{id}/levels/{floor}/spaces")]
         public async Task<IActionResult> CreateParkingSpace(int id, int floor, [FromBody] CreateParkingSpaceDto dto)
         {
-            var command = new CreateParkingSpaceCommand(id, floor, dto.Number);
+            var command = new AddParkingSpaceCommand(id, floor, dto.Number);
             var result = await mediator.Send(command);
             if (!result.IsSuccess)
             {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parking_Web.ViewModels.ParkingLevel
+namespace Web.ViewModels.ParkingLevel
 {
     public class ParkingLevelCreateViewModel
     {

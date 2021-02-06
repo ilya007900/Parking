@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Parking_Web.ViewModels.Parking.Edit
+namespace Web.ViewModels.Parking.Edit
 {
     public class ParkingLevelEditViewModel
     {

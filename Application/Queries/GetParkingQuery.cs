@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
+using ParkingService.Application.Interfaces;
 
-namespace Application.Queries
+namespace ParkingService.Application.Queries
 {
     public class GetParkingQuery : IQuery<ParkingInfoDto>
     {
@@ -34,15 +34,15 @@ namespace Application.Queries
                 Country = parkingInfo.Address.Country,
                 City = parkingInfo.Address.City,
                 Street = parkingInfo.Address.Street,
-                Levels = parkingInfo.ParkingLevels.Select(l => new ParkingInfoDto.ParkingLevelInfoDto
+                Levels = parkingInfo.Floors.Select(l => new ParkingInfoDto.ParkingLevelInfoDto
                 {
                     Id = l.Id,
-                    Floor = l.Floor,
+                    Floor = l.Number,
                     Spaces = l.ParkingSpaces.Select(s => new ParkingInfoDto.ParkingLevelInfoDto.ParkingSpaceInfoDto
                     {
                         Id = s.Id,
                         Number = s.Number,
-                        IsFree = s.IsFree,
+                        //IsFree = s.IsFree,
                     }).ToList()
                 }).ToList()
             });

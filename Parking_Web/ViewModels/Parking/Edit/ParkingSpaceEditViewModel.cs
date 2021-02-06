@@ -1,6 +1,6 @@
-﻿using Domain;
+﻿using ParkingService.Domain;
 
-namespace Parking_Web.ViewModels.Parking.Edit
+namespace Web.ViewModels.Parking.Edit
 {
     public class ParkingSpaceEditViewModel
     {

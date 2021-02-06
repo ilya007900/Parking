@@ -1,4 +1,4 @@
-﻿namespace Parking_Web.ViewModels.Parking.Details
+﻿namespace Web.ViewModels.Parking.Details
 {
     public class ParkingSpaceDetailsViewModel
     {

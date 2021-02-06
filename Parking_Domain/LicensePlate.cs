@@ -1,7 +1,7 @@
-﻿using Domain.Common;
-using Domain.FunctionalExtensions;
+﻿using ParkingService.Domain.Common;
+using ParkingService.Domain.FunctionalExtensions;
 
-namespace Domain
+namespace ParkingService.Domain
 {
     public class LicensePlate : ValueObject<LicensePlate>
     {

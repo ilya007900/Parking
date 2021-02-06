@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using Domain.Entities;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
-namespace Persistence
+namespace ParkingService.Persistence
 {
     public class AppContext : DbContext
     {
-        public DbSet<Parking> Parkings { get; set; }
+        public DbSet<Domain.Entities.Parking> Parkings { get; set; }
 
         public AppContext(DbContextOptions<AppContext> contextOptions) : base(contextOptions)
         {

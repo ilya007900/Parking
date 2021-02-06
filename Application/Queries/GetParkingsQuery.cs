@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
+using ParkingService.Application.Interfaces;
 
-namespace Application.Queries
+namespace ParkingService.Application.Queries
 {
     public class GetParkingsQuery : IQuery<IReadOnlyList<ParkingDto>>
     {
@@ -28,7 +28,7 @@ namespace Application.Queries
                     Country = x.Address.Country,
                     City = x.Address.City,
                     Street = x.Address.Street,
-                    LevelsCount = x.ParkingLevels.Count
+                    LevelsCount = x.Floors.Count
                 }).ToList();
 
             return Task.FromResult(dtos as IReadOnlyList<ParkingDto>);

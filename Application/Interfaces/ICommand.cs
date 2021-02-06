@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Interfaces
+namespace ParkingService.Application.Interfaces
 {
     public interface ICommand : IRequest
     {

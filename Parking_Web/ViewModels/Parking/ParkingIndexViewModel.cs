@@ -1,4 +1,4 @@
-﻿namespace Parking_Web.ViewModels.Parking
+﻿namespace Web.ViewModels.Parking
 {
     public class ParkingIndexViewModel
     {

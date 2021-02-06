@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
-using Domain;
-using Domain.Entities;
-using Domain.FunctionalExtensions;
+using ParkingService.Application.Interfaces;
+using ParkingService.Domain;
+using ParkingService.Domain.FunctionalExtensions;
 
-namespace Application.Commands
+namespace ParkingService.Application.Commands
 {
     public class CreateParkingCommand : ICommand<Result<int>>
     {
@@ -39,7 +38,7 @@ namespace Application.Commands
                 return Task.FromResult(Result<int>.Failure(address.ErrorMessage));
             }
 
-            var parking = new Parking(address.Value);
+            var parking = new Domain.Entities.Parking(address.Value);
             var addedParking = unitOfWork.ParkingRepository.Add(parking);
             unitOfWork.Save();
 
@@ -47,7 +46,7 @@ namespace Application.Commands
         }
     }
 
-    public class CreateParkingDto
+    public class CreateParkingRequest
     {
         [Required]
         [StringLength(200, MinimumLength = 2)]

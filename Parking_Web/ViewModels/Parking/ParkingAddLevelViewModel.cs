@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Parking_Web.ViewModels.Parking
+namespace Web.ViewModels.Parking
 {
     public class ParkingAddLevelViewModel
     {

@@ -1,6 +1,6 @@
-﻿using Domain.FunctionalExtensions;
+﻿using ParkingService.Domain.FunctionalExtensions;
 
-namespace Domain
+namespace ParkingService.Domain
 {
     public class Vehicle
     {

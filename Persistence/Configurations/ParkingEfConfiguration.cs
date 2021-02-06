@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ParkingService.Domain.Entities;
 
-namespace Persistence.Configurations
+namespace ParkingService.Persistence.Configurations
 {
     internal class ParkingEfConfiguration : IEntityTypeConfiguration<Parking>
     {
@@ -12,6 +12,8 @@ namespace Persistence.Configurations
 
             builder.Property(p => p.Id).HasColumnName("Id").ValueGeneratedOnAdd();
 
+            builder.Ignore(x => x.ParkingSpaces);
+
             builder.OwnsOne(p => p.Address, p =>
             {
                 p.Property(pp => pp.City).HasColumnName("City");
@@ -19,7 +21,7 @@ namespace Persistence.Configurations
                 p.Property(pp => pp.Street).HasColumnName("Street");
             });
 
-            builder.HasMany(p => p.ParkingLevels).WithOne()
+            builder.HasMany(p => p.Floors).WithOne()
                 .OnDelete(DeleteBehavior.Cascade)
                 .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
         }

@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Parking_Domain\Domain.csproj" />
+    <ProjectReference Include="..\Parking_Domain\ParkingService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

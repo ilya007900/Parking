@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Parking_Web.ViewModels.Parking;
-using Parking_Web.ViewModels.Parking.Edit;
+using Web.ViewModels.Parking;
+using Web.ViewModels.Parking.Edit;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Commands;
-using Application.Queries;
-using Parking_Web.ViewModels.Parking.Details;
+using ParkingService.Application.Commands;
+using ParkingService.Application.Queries;
+using Web.ViewModels.Parking.Details;
 
-namespace Parking_Web.Controllers
+namespace Web.Controllers
 {
     public class ParkingController : Controller
     {
@@ -47,7 +47,7 @@ namespace Parking_Web.Controllers
                 return BadRequest(viewModel);
             }
 
-            var dto = new CreateParkingDto
+            var dto = new CreateParkingRequest
             {
                 Country = viewModel.Country,
                 City = viewModel.City,
@@ -153,7 +153,7 @@ namespace Parking_Web.Controllers
                 return BadRequest();
             }
 
-            var dto = new AddParkingLevelDto
+            var dto = new AddFloorRequest
             {
                 Floor = viewModel.Floor
             };

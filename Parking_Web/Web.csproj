@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Parking_Domain\Domain.csproj" />
+    <ProjectReference Include="..\Application\ParkingService.Application.csproj" />
+    <ProjectReference Include="..\Parking_Domain\ParkingService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

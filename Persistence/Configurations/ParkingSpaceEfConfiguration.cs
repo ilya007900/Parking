@@ -1,9 +1,9 @@
-﻿using Domain;
-using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ParkingService.Domain;
+using ParkingService.Domain.Entities;
 
-namespace Persistence.Configurations
+namespace ParkingService.Persistence.Configurations
 {
     internal class ParkingSpaceEfConfiguration : IEntityTypeConfiguration<ParkingSpace>
     {

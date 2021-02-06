@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Domain.Entities;
+using ParkingService.Domain.Entities;
 
-namespace Application.Interfaces
+namespace ParkingService.Domain.Repositories
 {
     public interface IParkingRepository
     {

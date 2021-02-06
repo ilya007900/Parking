@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Application.Interfaces;
-using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using ParkingService.Domain.Entities;
+using ParkingService.Domain.Repositories;
 
-namespace Persistence
+namespace ParkingService.Persistence
 {
     public class ParkingRepository : IParkingRepository
     {
@@ -27,7 +27,7 @@ namespace Persistence
         public Parking Find(int id)
         {
             return dbContext.Parkings
-                .Include(x => x.ParkingLevels)
+                .Include(x => x.Floors)
                 .ThenInclude(x => x.ParkingSpaces)
                 .FirstOrDefault(x => x.Id == id);
         }

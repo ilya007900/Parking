@@ -1,6 +1,6 @@
-﻿using Domain.FunctionalExtensions;
+﻿using ParkingService.Domain.FunctionalExtensions;
 
-namespace Domain
+namespace ParkingService.Domain
 {
     public class Address
     {
@@ -23,6 +23,11 @@ namespace Domain
         protected Address()
         {
             
+        }
+
+        public override string ToString()
+        {
+            return $"{Street}, {City}, {Country}";
         }
 
         public static Result<Address> Create(string country, string city, string street)

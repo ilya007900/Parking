@@ -1,6 +1,7 @@
-﻿using Application.Interfaces;
+﻿using ParkingService.Application.Interfaces;
+using ParkingService.Domain.Repositories;
 
-namespace Persistence
+namespace ParkingService.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {

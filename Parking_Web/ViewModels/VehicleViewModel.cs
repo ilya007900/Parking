@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Parking_Web.ViewModels
+namespace Web.ViewModels
 {
     public class VehicleViewModel
     {

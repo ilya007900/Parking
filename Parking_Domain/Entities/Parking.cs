@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Common;
-using Domain.FunctionalExtensions;
+using ParkingService.Domain.Common;
+using ParkingService.Domain.FunctionalExtensions;
 
-namespace Domain.Entities
+namespace ParkingService.Domain.Entities
 {
     public class Parking : Entity
     {
-        private readonly List<ParkingLevel> parkingLevels = new List<ParkingLevel>();
+        private readonly List<Floor> floors = new List<Floor>();
+        private readonly List<ParkingEvent> events = new List<ParkingEvent>();
 
-        public virtual IReadOnlyList<ParkingLevel> ParkingLevels => parkingLevels;
+        public virtual IReadOnlyList<Floor> Floors => floors;
+        public virtual IReadOnlyList<ParkingEvent> Events => events;
+
+        public int ParkingSpaces => Floors.Sum(x => x.ParkingSpaces.Count);
 
         public virtual Address Address { get; private set; }
 
-        public Parking(Address address) : this()
+        public virtual ParkingState State { get; private set; }
+
+        public Parking(Address address, ParkingState state = null) : this()
         {
             Address = address;
+            State = state ?? ParkingState.Closed;
         }
 
         //For EF
@@ -25,48 +32,58 @@ namespace Domain.Entities
             
         }
 
-        public Result AddParkingLevel(ParkingLevel parkingLevel)
+        public Result AddFloor(Floor parkingLevel)
         {
-            if (parkingLevels.Any(x => x.Floor == parkingLevel.Floor))
+            if (floors.Any(x => x.Number == parkingLevel.Number))
             {
-                return Result.Failure($"Parking level with floor {parkingLevel.Floor} already exists");
+                return Result.Failure($"Floor {parkingLevel.Number} already exists");
             }
 
-            parkingLevels.Add(parkingLevel);
+            floors.Add(parkingLevel);
             return Result.Success();
         }
 
-        public void RemoveParkingLevel(int floor)
+        public Result RemoveFloor(int floor)
         {
-            var parkingLevel = parkingLevels.FirstOrDefault(x => x.Floor == floor);
-            if (parkingLevel != null)
+            var parkingLevel = floors.FirstOrDefault(x => x.Number == floor);
+            if (parkingLevel == null)
             {
-                parkingLevels.Remove(parkingLevel);
+                return Result.Success();
             }
+
+            if (parkingLevel.ParkingSpaces.Any(x => x.State == ParkingSpaceState.Occupied))
+            {
+                return Result.Failure($"Can't remove floor {floor}. Floor has occupied parking spaces");
+            }
+
+            floors.Remove(parkingLevel);
+            return Result.Success();
+        }
+
+        public void AddEvent(ParkingEvent parkingEvent)
+        {
+            events.Add(parkingEvent);
         }
 
         public void UpdateAddress(Address address)
         {
-            if (address == null)
-            {
-                throw new ArgumentNullException(nameof(address));
-            }
-
-            Address = address;
+            Address = address ?? throw new ArgumentNullException(nameof(address));
         }
 
-        public ParkingSpace FindParkingSpace(LicensePlate licensePlate)
+        public void UpdateState(ParkingState state)
         {
-            foreach (var parkingLevel in parkingLevels)
+            State = state ?? throw new ArgumentNullException(nameof(state));
+        }
+
+        public Result<Floor> GetFloor(int floorNumber)
+        {
+            var floor = Floors.FirstOrDefault(x => x.Number == floorNumber);
+            if (floor == null)
             {
-                var parkingSpace = parkingLevel.FindParkingSpace(licensePlate);
-                if (parkingSpace != null)
-                {
-                    return parkingSpace;
-                }
+                return Result<Floor>.Failure($"Floor: {floorNumber} doesn't exist");
             }
 
-            return null;
+            return Result<Floor>.Success(floor);
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
-using Domain;
-using Domain.FunctionalExtensions;
+using ParkingService.Application.Interfaces;
+using ParkingService.Domain;
+using ParkingService.Domain.FunctionalExtensions;
 
-namespace Application.Commands
+namespace ParkingService.Application.Commands
 {
     public class UpdateParkingAddressCommand : ICommand<Result>
     {

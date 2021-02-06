@@ -1,4 +1,4 @@
-﻿namespace Domain.FunctionalExtensions
+﻿namespace ParkingService.Domain.FunctionalExtensions
 {
     public class Result
     {

@@ -1,14 +1,14 @@
 ﻿using System;
-using Domain.Common;
-using Domain.FunctionalExtensions;
+using ParkingService.Domain.Common;
+using ParkingService.Domain.FunctionalExtensions;
 
-namespace Domain.Entities
+namespace ParkingService.Domain.Entities
 {
     public class ParkingSpace : Entity
     {
         public int Number { get; }
 
-        public bool IsFree => Vehicle == null;
+        public ParkingSpaceState State { get; private set; }
 
         public virtual Vehicle Vehicle { get; private set; }
 
@@ -17,25 +17,32 @@ namespace Domain.Entities
             Number = number;
         }
 
-        public Result ParkVehicle(Vehicle vehicle)
+        public void ParkVehicle(Vehicle vehicle)
         {
-            if (vehicle == null)
+            if (State != ParkingSpaceState.Free)
             {
-                throw new ArgumentNullException(nameof(vehicle));
+                throw new Exception($"Parking space {Number} doesn't empty");
             }
 
-            if (Vehicle != null)
-            {
-                return Result.Failure($"Parking space {Number} doesn't empty");
-            }
-
-            Vehicle = vehicle;
-            return Result.Success();
+            Vehicle = vehicle ?? throw new ArgumentNullException(nameof(vehicle));
+            State = ParkingSpaceState.Occupied;
         }
 
-        public void FreeParkingSpace()
+        public void Free()
         {
             Vehicle = null;
+            State = ParkingSpaceState.Free;
+        }
+
+        public Result Close()
+        {
+            if (State == ParkingSpaceState.Occupied)
+            {
+                return Result.Failure($"Can't close parking space with state {State}");
+            }
+
+            State = ParkingSpaceState.Closed;
+            return Result.Success();
         }
     }
 }

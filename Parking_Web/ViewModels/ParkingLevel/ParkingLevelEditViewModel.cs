@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using ParkingService.Domain.Entities;
 
-namespace Parking_Web.ViewModels.ParkingLevel
+namespace Web.ViewModels.ParkingLevel
 {
     public class ParkingLevelEditViewModel
     {

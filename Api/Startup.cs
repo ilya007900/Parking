@@ -1,15 +1,15 @@
 using System.Reflection;
-using Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Persistence;
+using ParkingService.Application.Interfaces;
+using ParkingService.Persistence;
+using Shared.Infrastructure;
 
-namespace Api
+namespace ParkingService.Api
 {
     public class Startup
     {
@@ -25,12 +25,14 @@ namespace Api
             services.AddControllers();
             services.AddMediatR(Assembly.GetAssembly(typeof(IUnitOfWork)));
 
+            services.AddOpenApi();
+
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<AppContext>(x =>
             {
-                x.UseSqlServer(connectionString);
-                x.UseLazyLoadingProxies();
+                //x.UseSqlServer(connectionString);
+                //x.UseLazyLoadingProxies();
             });
         }
 
@@ -41,11 +43,11 @@ namespace Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseOpenApi(env.ApplicationName);
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

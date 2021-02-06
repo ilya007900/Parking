@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Parking_Web.ViewModels.Parking.Edit
+namespace Web.ViewModels.Parking.Edit
 {
     public class ParkingEditViewModel
     {
