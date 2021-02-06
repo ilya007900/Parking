@@ -9,10 +9,10 @@ namespace ParkingService.Domain.Entities
     public class Parking : Entity
     {
         private readonly List<Floor> floors = new List<Floor>();
-        private readonly List<ParkingEvent> events = new List<ParkingEvent>();
+        //private readonly List<ParkingEvent> events = new List<ParkingEvent>();
 
         public virtual IReadOnlyList<Floor> Floors => floors;
-        public virtual IReadOnlyList<ParkingEvent> Events => events;
+        //public virtual IReadOnlyList<ParkingEvent> Events => events;
 
         public int ParkingSpaces => Floors.Sum(x => x.ParkingSpaces.Count);
 
@@ -32,14 +32,14 @@ namespace ParkingService.Domain.Entities
             
         }
 
-        public Result AddFloor(Floor parkingLevel)
+        public Result AddFloor(Floor floor)
         {
-            if (floors.Any(x => x.Number == parkingLevel.Number))
+            if (floors.Any(x => x.Number == floor.Number))
             {
-                return Result.Failure($"Floor {parkingLevel.Number} already exists");
+                return Result.Failure($"Floor {floor.Number} already exists");
             }
 
-            floors.Add(parkingLevel);
+            floors.Add(floor);
             return Result.Success();
         }
 
@@ -62,7 +62,7 @@ namespace ParkingService.Domain.Entities
 
         public void AddEvent(ParkingEvent parkingEvent)
         {
-            events.Add(parkingEvent);
+            //events.Add(parkingEvent);
         }
 
         public void UpdateAddress(Address address)

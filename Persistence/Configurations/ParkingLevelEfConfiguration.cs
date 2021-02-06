@@ -8,9 +8,13 @@ namespace ParkingService.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Floor> builder)
         {
-            builder.ToTable("ParkingLevel").HasKey(p => p.Id);
+            builder.ToTable("ParkingLevel", ParkingDbContext.DefaultSchema).HasKey(p => p.Id);
+
             builder.Property(p => p.Id).HasColumnName("Id").ValueGeneratedOnAdd();
             builder.Property(p => p.Number).HasColumnName("Floor");
+
+            builder.Ignore(x => x.State);
+
             builder.HasMany(p => p.ParkingSpaces).WithOne()
                 .OnDelete(DeleteBehavior.Cascade)
                 .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);

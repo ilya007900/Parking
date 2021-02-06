@@ -9,9 +9,13 @@ namespace ParkingService.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ParkingSpace> builder)
         {
-            builder.ToTable("ParkingSpace").HasKey(p => p.Id);
+            builder.ToTable("ParkingSpace", ParkingDbContext.DefaultSchema).HasKey(p => p.Id);
+
             builder.Property(p => p.Id).HasColumnName("Id").ValueGeneratedOnAdd();
             builder.Property(p => p.Number).HasColumnName("Number");
+
+            builder.Ignore(x => x.State);
+
             builder.OwnsOne(p => p.Vehicle, p =>
             {
                 p.Property(pp => pp.Weight).HasColumnName("VehicleWeight");

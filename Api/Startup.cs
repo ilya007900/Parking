@@ -2,6 +2,7 @@ using System.Reflection;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,18 +30,19 @@ namespace ParkingService.Api
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddDbContext<AppContext>(x =>
+            services.AddDbContext<ParkingDbContext>(x =>
             {
-                //x.UseSqlServer(connectionString);
+                x.UseSqlServer(connectionString);
                 //x.UseLazyLoadingProxies();
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ParkingDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseTestData(dbContext);
             }
 
             app.UseOpenApi(env.ApplicationName);

@@ -5,13 +5,13 @@ namespace ParkingService.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly AppContext appContext;
+        private readonly ParkingDbContext appContext;
 
         private IParkingRepository parkingRepository;
 
         public IParkingRepository ParkingRepository => parkingRepository ??= new ParkingRepository(appContext);
 
-        public UnitOfWork(AppContext appContext)
+        public UnitOfWork(ParkingDbContext appContext)
         {
             this.appContext = appContext;
         }
