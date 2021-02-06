@@ -21,7 +21,7 @@ namespace ParkingService.Domain.Entities
 
         public static ParkingEvent Create(string description)
         {
-            return new(description, DateTime.Now);
+            return new ParkingEvent(description, DateTime.Now);
         }
     }
 }
