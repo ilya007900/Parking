@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ParkingService.Application.Interfaces;
@@ -34,16 +35,27 @@ namespace ParkingService.Application.Commands
         {
             var parking = unitOfWork.ParkingRepository.Find(request.ParkingId);
             var level = parking.Floors.First(x => x.Number == request.Floor);
-            var parkingSpace = new ParkingSpace(request.SpaceNumber);
-            var result = level.AddParkingSpace(parkingSpace);
+            var parkingSpace = ParkingSpace.Create(request.SpaceNumber);
+            if (!parkingSpace.IsSuccess)
+            {
+                return Task.FromResult(Result.Failure(parkingSpace.ErrorMessage));
+            }
+
+            var result = level.AddParkingSpace(parkingSpace.Value);
+            if (!result.IsSuccess)
+            {
+                return Task.FromResult(Result.Failure(result.ErrorMessage));
+            }
+
             unitOfWork.Save();
 
             return Task.FromResult(result);
         }
     }
 
-    public class CreateParkingSpaceDto
+    public class CreateParkingSpaceRequest
     {
+        [Required]
         public int Number { get; set; }
     }
 }

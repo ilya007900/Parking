@@ -46,11 +46,20 @@ namespace ParkingService.Api.Controllers
                 return BadRequest(result.ErrorMessage);
             }
 
-            return Ok(result);
+            return Ok(result.Value);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteParkingCommand(id);
+            await mediator.Send(command);
+
+            return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAddress(int id, [FromBody] UpdateParkingAddressDto dto)
+        public async Task<IActionResult> UpdateAddress(int id, [FromBody] UpdateParkingAddressRequest dto)
         {
             if (!ModelState.IsValid)
             {
@@ -67,15 +76,28 @@ namespace ParkingService.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("{id}/levels")]
-        public async Task<IActionResult> AddLevel(int id, [FromBody] AddFloorRequest dto)
+        [HttpPut("{id}/close")]
+        public async Task<IActionResult> CloseParking(int id)
+        {
+            var command = new CloseParkingCommand(id);
+            var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("{id}/floors")]
+        public async Task<IActionResult> AddFloor(int id, [FromBody] AddFloorRequest dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var command = new AddFloorCommand(id, dto.Floor);
+            var command = new AddFloorCommand(id, dto.Number);
             var result = await mediator.Send(command);
             if (!result.IsSuccess)
             {
@@ -85,8 +107,21 @@ namespace ParkingService.Api.Controllers
             return Ok(new { id = result.Value });
         }
 
-        [HttpDelete("{id}/levels/{floor}")]
-        public async Task<IActionResult> DeleteLevel(int id, int floor)
+        [HttpPut("{id}/floors/{floor}/close")]
+        public async Task<IActionResult> CloseFloor(int id, int floor)
+        {
+            var command = new CloseFloorCommand(id, floor);
+            var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}/floors/{floor}")]
+        public async Task<IActionResult> DeleteFloor(int id, int floor)
         {
             var command = new DeleteFloorCommand(id, floor);
             var result = await mediator.Send(command);
@@ -98,8 +133,8 @@ namespace ParkingService.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("{id}/levels/{floor}/spaces")]
-        public async Task<IActionResult> CreateParkingSpace(int id, int floor, [FromBody] CreateParkingSpaceDto dto)
+        [HttpPost("{id}/floors/{floor}/spaces")]
+        public async Task<IActionResult> CreateParkingSpace(int id, int floor, [FromBody] CreateParkingSpaceRequest dto)
         {
             var command = new AddParkingSpaceCommand(id, floor, dto.Number);
             var result = await mediator.Send(command);
@@ -111,11 +146,16 @@ namespace ParkingService.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}/levels/{floor}/spaces/{number}")]
+        [HttpDelete("{id}/floors/{floor}/spaces/{number}")]
         public async Task<IActionResult> DeleteParkingSpace(int id, int floor, int number)
         {
             var command = new DeleteParkingSpaceCommand(id, floor, number);
-            await mediator.Send(command);
+            var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+
             return Ok();
         }
     }

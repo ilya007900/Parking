@@ -10,12 +10,12 @@ namespace ParkingService.Application.Commands
     public class AddFloorCommand : ICommand<Result<int>>
     {
         public int ParkingId { get; }
-        public int Floor { get; }
+        public int Number { get; }
 
-        public AddFloorCommand(int parkingId, int floor)
+        public AddFloorCommand(int parkingId, int number)
         {
             ParkingId = parkingId;
-            Floor = floor;
+            Number = number;
         }
     }
 
@@ -36,7 +36,7 @@ namespace ParkingService.Application.Commands
                 return Task.FromResult(Result<int>.Failure(""));
             }
 
-            var parkingLevel = new Floor(request.Floor);
+            var parkingLevel = new Floor(request.Number);
             var result = parking.AddFloor(parkingLevel);
             if (!result.IsSuccess)
             {
@@ -52,6 +52,6 @@ namespace ParkingService.Application.Commands
     public class AddFloorRequest
     {
         [Required]
-        public int Floor { get; set; }
+        public int Number { get; set; }
     }
 }

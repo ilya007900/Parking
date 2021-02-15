@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
-using ParkingService.Domain.Dtos;
+﻿using ParkingService.Domain.Dtos;
 using ParkingService.Domain.Entities;
 using ParkingService.Domain.Extensions;
 using ParkingService.Domain.FunctionalExtensions;
+using System.Linq;
 
 namespace ParkingService.Domain.Services
 {
@@ -71,25 +70,27 @@ namespace ParkingService.Domain.Services
             floor.UpdateState(FloorState.Open);
         }
 
-        public void CloseFloor(Parking parking, int floorNumber)
+        public Result CloseFloor(Parking parking, int floorNumber)
         {
             var floor = parking.Floors.FirstOrDefault(x => x.Number == floorNumber);
             if (floor == null)
             {
-                return;
+                return Result.Failure($"Floor {floorNumber} not found");
             }
 
             if (floor.State == FloorState.Closed)
             {
-                return;
+                return Result.Success();
             }
 
             if (!floor.CanClose())
             {
-                throw new Exception($"Can't close floor: {floor.Number}. Floor has occupied parking spaces");
+                Result.Failure($"Can't close floor: {floor.Number}. Floor has occupied parking spaces");
             }
 
             floor.UpdateState(FloorState.Closed);
+
+            return Result.Success();
         }
 
         public Result ParkVehicle(Parking parking, int floorNumber, int parkingSpaceNumber, Vehicle vehicle)

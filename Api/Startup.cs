@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ParkingService.Application.Interfaces;
+using ParkingService.Domain.Services;
 using ParkingService.Persistence;
 using Shared.Infrastructure;
 
@@ -35,6 +36,8 @@ namespace ParkingService.Api
                 x.UseSqlServer(connectionString);
                 //x.UseLazyLoadingProxies();
             });
+
+            services.AddSingleton<ParkingManager>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ParkingDbContext dbContext)

@@ -34,15 +34,13 @@ namespace ParkingService.Application.Queries
                 Country = parkingInfo.Address.Country,
                 City = parkingInfo.Address.City,
                 Street = parkingInfo.Address.Street,
-                Levels = parkingInfo.Floors.Select(l => new ParkingInfoDto.ParkingLevelInfoDto
+                Floors = parkingInfo.Floors.Select(l => new ParkingInfoDto.ParkingFloorInfoDto
                 {
-                    Id = l.Id,
-                    Floor = l.Number,
-                    Spaces = l.ParkingSpaces.Select(s => new ParkingInfoDto.ParkingLevelInfoDto.ParkingSpaceInfoDto
+                    Number = l.Number,
+                    Spaces = l.ParkingSpaces.Select(s => new ParkingInfoDto.ParkingFloorInfoDto.ParkingSpaceInfoDto
                     {
-                        Id = s.Id,
                         Number = s.Number,
-                        //IsFree = s.IsFree,
+                        State = s.State.ToString(),
                     }).ToList()
                 }).ToList()
             });
@@ -59,23 +57,19 @@ namespace ParkingService.Application.Queries
 
         public string Street { get; set; }
 
-        public IReadOnlyList<ParkingLevelInfoDto> Levels { get; set; }
+        public IReadOnlyList<ParkingFloorInfoDto> Floors { get; set; }
 
-        public class ParkingLevelInfoDto
+        public class ParkingFloorInfoDto
         {
-            public int Id { get; set; }
-
-            public int Floor { get; set; }
+            public int Number { get; set; }
 
             public IReadOnlyList<ParkingSpaceInfoDto> Spaces { get; set; }
 
             public class ParkingSpaceInfoDto
             {
-                public int Id { get; set; }
-
                 public int Number { get; set; }
 
-                public bool IsFree { get; set; }
+                public string State { get; set; }
             }
         }
     }

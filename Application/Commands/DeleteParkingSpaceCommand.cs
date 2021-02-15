@@ -3,10 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using ParkingService.Application.Interfaces;
+using ParkingService.Domain.FunctionalExtensions;
 
 namespace ParkingService.Application.Commands
 {
-    public class DeleteParkingSpaceCommand : ICommand
+    public class DeleteParkingSpaceCommand : ICommand<Result>
     {
         public int ParkingId { get; }
         public int Floor { get; }
@@ -20,7 +21,7 @@ namespace ParkingService.Application.Commands
         }
     }
 
-    public class DeleteParkingSpaceCommandHandler : ICommandHandler<DeleteParkingSpaceCommand>
+    public class DeleteParkingSpaceCommandHandler : ICommandHandler<DeleteParkingSpaceCommand, Result>
     {
         private readonly IUnitOfWork unitOfWork;
 
@@ -29,15 +30,19 @@ namespace ParkingService.Application.Commands
             this.unitOfWork = unitOfWork;
         }
 
-        public Task<Unit> Handle(DeleteParkingSpaceCommand request, CancellationToken cancellationToken)
+        public Task<Result> Handle(DeleteParkingSpaceCommand request, CancellationToken cancellationToken)
         {
             var parking = unitOfWork.ParkingRepository.Find(request.ParkingId);
             var level = parking.Floors.First(x => x.Number == request.Floor);
-            level.RemoveParkingSpace(request.SpaceNumber);
+            var result = level.RemoveParkingSpace(request.SpaceNumber);
+            if (!result.IsSuccess)
+            {
+                return Task.FromResult(Result.Failure(result.ErrorMessage));
+            }
 
             unitOfWork.Save();
 
-            return Unit.Task;
+            return Task.FromResult(Result.Success());
         }
     }
 }

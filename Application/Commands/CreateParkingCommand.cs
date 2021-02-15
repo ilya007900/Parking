@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ParkingService.Application.Interfaces;
 using ParkingService.Domain;
+using ParkingService.Domain.Entities;
 using ParkingService.Domain.FunctionalExtensions;
 
 namespace ParkingService.Application.Commands
@@ -38,7 +39,7 @@ namespace ParkingService.Application.Commands
                 return Task.FromResult(Result<int>.Failure(address.ErrorMessage));
             }
 
-            var parking = new Domain.Entities.Parking(address.Value);
+            var parking = new Parking(address.Value);
             var addedParking = unitOfWork.ParkingRepository.Add(parking);
             unitOfWork.Save();
 

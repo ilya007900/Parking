@@ -55,7 +55,7 @@ namespace ParkingService.Application.Commands
         }
     }
 
-    public class UpdateParkingAddressDto
+    public class UpdateParkingAddressRequest
     {
         [Required]
         [StringLength(200, MinimumLength = 2)]

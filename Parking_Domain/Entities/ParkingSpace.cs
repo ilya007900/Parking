@@ -44,5 +44,15 @@ namespace ParkingService.Domain.Entities
             State = ParkingSpaceState.Closed;
             return Result.Success();
         }
+
+        public static Result<ParkingSpace> Create(int number)
+        {
+            var parkingSpace = new ParkingSpace(number)
+            {
+                State = ParkingSpaceState.Free
+            };
+
+            return Result<ParkingSpace>.Success(parkingSpace);
+        }
     }
 }
